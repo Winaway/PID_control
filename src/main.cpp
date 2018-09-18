@@ -30,17 +30,17 @@ std::string hasData(std::string s) {
 
 int main(int argc,char *argv[])
 {
-  std::cout<<"******"<<std::endl;
+  // std::cout<<"******"<<std::endl;
   uWS::Hub h;
 
   PID pid;
   // TODO: Initialize the pid variable.
-  std::cout<<"before Init"<<std::endl;
-  double kp = atof(argv[1]);
-  double ki = atof(argv[2]);
-  double kd = atof(argv[3]);
+  // std::cout<<"before Init"<<std::endl;
+  double kp = -0.14;
+  double ki = 0.0;
+  double kd = -4.0;
   pid.Init(kp,ki,kd);
-  std::cout<<"after Init"<<std::endl;
+  // std::cout<<"after Init"<<std::endl;
 
   h.onMessage([&pid](uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length, uWS::OpCode opCode) {
     // "42" at the start of the message means there's a websocket message event.
@@ -72,7 +72,7 @@ int main(int argc,char *argv[])
 
           json msgJson;
           msgJson["steering_angle"] = steer_value;
-          msgJson["throttle"] = 0.3;
+          msgJson["throttle"] = 0.4;
           auto msg = "42[\"steer\"," + msgJson.dump() + "]";
           std::cout << msg << std::endl;
           ws.send(msg.data(), msg.length(), uWS::OpCode::TEXT);
